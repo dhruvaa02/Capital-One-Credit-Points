@@ -25,7 +25,7 @@ class RuleSet:
                 remaining_money[debit] = remaining_money[debit] - (rule_to_apply[1][debit] * mult)
             return (points, remaining_money)
 
-print(RuleSet().apply_rule({"sport_chek": 75, "tim_hortons": 25, "subway": 25}, 0, 2))
+# print(RuleSet().apply_rule({"sport_chek": 75, "tim_hortons": 25, "subway": 25}, 0, 2))
 # class Rules:
 
 #     definition: tuple[int, dict] = None
