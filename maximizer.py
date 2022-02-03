@@ -32,7 +32,7 @@ def get_valid_rules(spendings: dict) -> list:
             valid_rules.append(i)
     return valid_rules
 
-print(reduced_bf({"sport_chek": 25, "tim_hortons": 10, "the_bay": 5}))
+# print(reduced_bf({"sport_chek": 25, "tim_hortons": 10, "the_bay": 5}))
 
 # rules = [1, 2, 3, 4, 5]
 # print(list(permutations(rules)))
