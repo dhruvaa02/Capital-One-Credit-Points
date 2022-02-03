@@ -1,7 +1,7 @@
 from rules import RuleSet
 from itertools import permutations
 
-def reduced_bf(spendings: dict) -> int:
+def reduced_bf(spendings: dict) -> tuple:
     valid_rules = get_valid_rules(spendings)
     permutes = list(permutations(valid_rules))
     points_from_permutes = []
@@ -15,7 +15,7 @@ def reduced_bf(spendings: dict) -> int:
             points += applied[0]
             spendings_to_try = applied[1]
         points += RuleSet().apply_rule(spendings_to_try, 0)[0]
-        points_from_permutes.append(points)
+        points_from_permutes.append((points, permute))
     return max(points_from_permutes)
 
 def get_valid_rules(spendings: dict) -> list:
@@ -32,7 +32,7 @@ def get_valid_rules(spendings: dict) -> list:
             valid_rules.append(i)
     return valid_rules
 
-# print(reduced_bf({"sport_chek": 25, "tim_hortons": 10, "the_bay": 5}))
+print(reduced_bf({"sport_chek": 210}))
 
 # rules = [1, 2, 3, 4, 5]
 # print(list(permutations(rules)))
