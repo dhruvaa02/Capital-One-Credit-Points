@@ -1,5 +1,14 @@
 from ortools.linear_solver import pywraplp
 
+def find_defined_merchants(rules: list) -> dict:
+    merchants = {}
+    for rule in rules:
+        for merchant in rule[1].keys():
+            if merchant not in merchants:
+                merchants[merchant] = ""
+    merchants.pop("remaining")
+    return merchants
+
 rules = [
         (1, {"remaining": 1}),
         (500, {"sport_chek": 75, "tim_hortons": 25, "subway": 25}),
@@ -16,40 +25,27 @@ solver = pywraplp.Solver.CreateSolver('SCIP')
 
 x = [0]
 
-sports_expr = ""
-tims_expr = ""
-sub_expr = ""
+exprs = find_defined_merchants(rules)
 
 for i in range(1, len(rules)):
     x.append(solver.IntVar(0, solver.infinity(), f"x{i}"))
-    if "sport_chek" in rules[i][1]:
-        if i == 1:
-            sports_expr = sports_expr + f"{rules[i][1]['sport_chek']}*x[{i}]"
-        else:
-            sports_expr = sports_expr + f" + {rules[i][1]['sport_chek']}*x[{i}]"
-    if "tim_hortons" in rules[i][1]:
-        if i == 1:
-            tims_expr = tims_expr + f"{rules[i][1]['tim_hortons']}*x[{i}]"
-        else:
-            tims_expr = tims_expr + f" + {rules[i][1]['tim_hortons']}*x[{i}]"
-    if "subway" in rules[i][1]:
-        if i == 1:
-            sub_expr = sub_expr + f"{rules[i][1]['subway']}*x[{i}]"
-        else:
-            sub_expr = sub_expr + f" + {rules[i][1]['subway']}*x[{i}]"
+    for shop in exprs.keys():
+        if shop in rules[i][1]:
+            if i == 1:
+                exprs[shop] = exprs[shop] + f"{rules[i][1][shop]}*x[{i}]"
+            else:
+                exprs[shop] = exprs[shop] + f" + {rules[i][1][shop]}*x[{i}]"
 
-sports_expr = sports_expr + f" <= {monthly['sport_chek']}"
-tims_expr = tims_expr + f" <= {monthly['tim_hortons']}"
-sub_expr = sub_expr + f" <= {monthly['subway']}"
+for shop in exprs.keys():
+    exprs[shop] = exprs[shop] + f" <= {monthly[shop]}"
 
 other = 0
 for shop in monthly.keys():
-    if shop not in "sport_chek tim_hortons subway":
+    if shop not in exprs.keys():
         other += monthly[shop]
 
-solver.Add(eval(sports_expr))
-solver.Add(eval(tims_expr))
-solver.Add(eval(sub_expr))
+for expr in exprs.values():
+    solver.Add(eval(expr))
 
 solver.Maximize(eval("x[1]*500 + x[2]*300 + x[3]*200 + x[4]*150 + x[5]*75 + x[6]*75"))
 
