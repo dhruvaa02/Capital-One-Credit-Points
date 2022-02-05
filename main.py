@@ -24,7 +24,7 @@ Rule 5: 0 times
 Rule 6: 13 times
 Rule 7: 50 times
 """
-from monthly import get_monthly_spendings
+from data import get_monthly_spendings
 from dynamic_lpp import dynamic_lpp_points_calc
 from rules import RuleSet
 
