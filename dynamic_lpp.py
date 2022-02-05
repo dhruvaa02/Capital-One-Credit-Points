@@ -9,55 +9,67 @@ def find_defined_merchants(rules: list) -> dict:
     merchants.pop("remaining")
     return merchants
 
-rules = [
-        (1, {"remaining": 1}),
-        (500, {"sport_chek": 75, "tim_hortons": 25, "subway": 25}),
-        (300, {"sport_chek": 75, "tim_hortons": 25}),
-        (200, {"sport_chek": 75}),
-        (150, {"sport_chek": 25, "tim_hortons": 10, "subway": 10}),
-        (75, {"sport_chek": 25, "tim_hortons": 10}),
-        (75, {"sport_chek": 20})
-    ]
-
-monthly = {"sport_chek": 25, "tim_hortons": 10, "subway": 0, "the_bay": 5}
-
-solver = pywraplp.Solver.CreateSolver('SCIP')
-
-x = [0]
-
-exprs = find_defined_merchants(rules)
-
-for i in range(1, len(rules)):
-    x.append(solver.IntVar(0, solver.infinity(), f"x{i}"))
+def generate_constraints(rules: list) -> tuple[dict, dict]:
+    exprs = find_defined_merchants(rules)
+    equations = exprs.copy()
+    for i in range(1, len(rules)):
+        for shop in exprs.keys():
+            if shop in rules[i][1]:
+                if i == 1:
+                    exprs[shop] = exprs[shop] + f"{rules[i][1][shop]}*x[{i}]"
+                    equations[shop] = equations[shop] + f"{rules[i][1][shop]}*x[{i}].solution_value()"
+                else:
+                    exprs[shop] = exprs[shop] + f" + {rules[i][1][shop]}*x[{i}]"
+                    equations[shop] = equations[shop] + f" + {rules[i][1][shop]}*x[{i}].solution_value()"
+    
     for shop in exprs.keys():
-        if shop in rules[i][1]:
-            if i == 1:
-                exprs[shop] = exprs[shop] + f"{rules[i][1][shop]}*x[{i}]"
-            else:
-                exprs[shop] = exprs[shop] + f" + {rules[i][1][shop]}*x[{i}]"
+        exprs[shop] = exprs[shop] + f" <= {monthly[shop]}"
 
-for shop in exprs.keys():
-    exprs[shop] = exprs[shop] + f" <= {monthly[shop]}"
+    return (exprs, equations)
 
-other = 0
-for shop in monthly.keys():
-    if shop not in exprs.keys():
-        other += monthly[shop]
+def gen_maximizer_expr(rules: list) -> str:
+    max = ""
+    for i in range(1, len(rules)):
+        if i == 1:
+            max = max + f"x[{i}]*{rules[i][0]}"
+        else:
+            max = max + f" + x[{i}]*{rules[i][0]}"
+    return max
 
-for expr in exprs.values():
-    solver.Add(eval(expr))
+def dynamic_lpp_points_calc(rules: list, monthly: dict) -> None:
+    solver = pywraplp.Solver.CreateSolver('SCIP')
+    x = [0]
 
-solver.Maximize(eval("x[1]*500 + x[2]*300 + x[3]*200 + x[4]*150 + x[5]*75 + x[6]*75"))
+    for i in range(1, len(rules)):
+        x.append(solver.IntVar(0, solver.infinity(), f"x{i}"))
 
-status = solver.Solve()
+    maths_rules = generate_constraints(rules)
+    constraints, points_eqs = maths_rules[0], maths_rules[1]
+    
+    other = 0
+    for shop in monthly.keys():
+        if shop not in constraints.keys():
+            other += monthly[shop]
 
-x[0] = sum([monthly['sport_chek'] - (75*x[1].solution_value() + 75*x[2].solution_value() + 75*x[3].solution_value() + 25*x[4].solution_value() + 25*x[5].solution_value() + 20*x[6].solution_value()), monthly['tim_hortons'] - (25*x[1].solution_value() + 25*x[2].solution_value() + 10*x[4].solution_value() + 10*x[5].solution_value()), monthly['subway'] - (25*x[1].solution_value() + 10*x[4].solution_value()), other])
+    for expr in constraints.values():
+        solver.Add(eval(expr))
 
-if status == pywraplp.Solver.OPTIMAL:
-    print('Solution:')
-    print('Objective value =', solver.Objective().Value() + x[0])
-    for i in range(1, 7):
-        print(f"Rule {i}: {x[i].solution_value()} times")
-    print(f"Rule 7: {x[0]} times")
-else:
-    print('The problem does not have an optimal solution.')
+    max = gen_maximizer_expr(rules)
+
+    solver.Maximize(eval(max))
+
+    status = solver.Solve()
+
+    for shop in points_eqs.keys():
+        x[0] += monthly[shop] - eval(f"{points_eqs[shop]}")
+
+    x[0] += other
+
+    if status == pywraplp.Solver.OPTIMAL:
+        print('Solution:')
+        print('Total points =', solver.Objective().Value() + x[0])
+        for i in range(1, 7):
+            print(f"Rule {i}: {int(x[i].solution_value())} times")
+        print(f"Rule 7: {int(x[0])} times")
+    else:
+        print('The problem does not have an optimal solution.')
