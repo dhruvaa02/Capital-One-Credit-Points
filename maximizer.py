@@ -8,14 +8,16 @@ def reduced_bf(spendings: dict) -> tuple:
     for permute in permutes:
         points = 0
         spendings_to_try = spendings.copy()
+        times = []
         for i in permute:
             rule = RuleSet().rules[i]
             times_to_app = min([spendings_to_try[debit] // rule[1][debit] for debit in rule[1].keys()])
+            times.append(times_to_app)
             applied = RuleSet().apply_rule(spendings_to_try, i, times_to_app)
             points += applied[0]
             spendings_to_try = applied[1]
         points += RuleSet().apply_rule(spendings_to_try, 0)[0]
-        points_from_permutes.append((points, permute))
+        points_from_permutes.append((points, permute, (times, spendings_to_try)))
     return max(points_from_permutes)
 
 def get_valid_rules(spendings: dict) -> list:
@@ -33,6 +35,3 @@ def get_valid_rules(spendings: dict) -> list:
     return valid_rules
 
 print(reduced_bf({"sport_chek": 210}))
-
-# rules = [1, 2, 3, 4, 5]
-# print(list(permutations(rules)))

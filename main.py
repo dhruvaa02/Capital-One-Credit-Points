@@ -1,7 +1,7 @@
 from monthly import get_monthly_spendings
-from maximizer import reduced_bf
+from dynamic_lpp import dynamic_lpp_points_calc
+from rules import RuleSet
 
 if __name__ == "__main__":
     monthly = get_monthly_spendings("transactions.json")
-    points = reduced_bf(monthly)
-    print(points)
+    dynamic_lpp_points_calc(RuleSet.rules, monthly)

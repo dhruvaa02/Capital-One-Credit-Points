@@ -9,8 +9,8 @@ def get_monthly_spendings(file: str) -> dict:
     for purchase in transactions["transactions"].values():
         shop = purchase["merchant_code"]
         if shop not in totals:
-            totals[shop] = purchase["amount_cents"]
+            totals[shop] = purchase["amount_cents"] // 100
         else:
-            totals[shop] = totals[shop] + purchase["amount_cents"]
+            totals[shop] = totals[shop] + purchase["amount_cents"] // 100
 
     return totals
