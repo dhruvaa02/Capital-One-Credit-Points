@@ -1,14 +1,18 @@
 """
 Main program for the Summer 2022 Capital One Credit Card Reward Points program 
-technical challenge
+technical challenge.
 
 This file runs the etire program. Here, you can specify the name of the
 file of a given user's transactions, as long as it is in JSON format.
 
 The program then calculates the total spendings of the user at each
 store during in the month and proceeds to calculate the maximum rewards
-points possible. TO_NOTE: As soon as the transactions are read from the file,
+points possible. 
+
+TO_NOTE: As soon as the transactions are read from the file,
 everything in the program is dealt with in dollar amounts, NOT in cents.
+Also, this program is running my dynamic linear programming implementation
+of the solution, not the brute force algorithm or the hard coded LPP code.
 
 The maximum points possible to be earned along with which rules were applied
 and how many times they were applied are printed in this format if
