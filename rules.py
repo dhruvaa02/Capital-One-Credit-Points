@@ -1,7 +1,7 @@
 class RuleSet:
 
     rules = [
-        (1, {"remaining": 1}),
+        (1, {"remainder": 1}),
         (500, {"sportcheck": 75, "tim_hortons": 25, "subway": 25}),
         (300, {"sportcheck": 75, "tim_hortons": 25}),
         (200, {"sportcheck": 75}),
