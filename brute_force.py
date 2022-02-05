@@ -1,7 +1,7 @@
 """
-This file contains my initial brute force implementation of the rewards points system.
-The algorithm isn't completely brute force as some simplifcations/improvements were added
-however it is still relatively dynamic, albeit theoretically slow.
+This file contains the initial brute force implementation of the rewards points system.
+Some simplifcations/improvements were added so it is still relatively dynamic, 
+albeit theoretically slow.
 """
 from rules import RuleSet
 from itertools import permutations
