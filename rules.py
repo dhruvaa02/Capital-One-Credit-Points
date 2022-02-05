@@ -31,6 +31,7 @@ class RuleSet:
         (75, {"sportcheck": 20})
     ]
 
+
     def apply_rule(self, spendings: dict, rule: int, mult: int=1) -> tuple[int, dict]:
         """Applies a rewards rule to a given monthly spendings. Only used for the brute
         force implementation.

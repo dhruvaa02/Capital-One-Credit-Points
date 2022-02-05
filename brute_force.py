@@ -39,6 +39,7 @@ def reduced_bf(spendings: dict) -> tuple:
         points_from_permutes.append((points, permute, times))
     return max(points_from_permutes)
 
+
 def get_valid_rules(spendings: dict) -> list:
     """Returns a list of all applicable rules for given monthly spendings.
 
