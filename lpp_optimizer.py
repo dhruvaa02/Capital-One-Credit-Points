@@ -4,6 +4,9 @@ tools as well as test if my equations were correct/working. This file exists as 
 hard coded values to understand how the LPP tool works/calculates. This file is not actually
 used anywhere since the rule creation has been made dynamic.
 
+My actual program takes this fundamental usage, and dynamically generates the rules,
+constraints, maximization function etc. from the rules list and transactions file.
+
 This implementation uses applied linear programming to use the SCIP algorithm to determine
 the coefficients that lead to the maximum number of points.
 """
