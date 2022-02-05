@@ -1,8 +1,8 @@
-# Capital One Credit Card Rewards System Project
+# Capital OnCapital One Credit Card Rewards System Project
 
 Welcome to my Credit Card Reward Points System program for the Capital One take-home project!
 
-In this page I will explain what is needed to use my program, how to use it, assumptions I  made , and how it can be improved, integrated and scaled.
+In this page I will explain what is needed to use my program, how to use it, assumptions I made, and how it can be improved, integrated and scaled.
 
 ### Preface
 
