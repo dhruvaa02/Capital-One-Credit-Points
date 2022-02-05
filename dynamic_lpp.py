@@ -118,7 +118,7 @@ def gen_maximizer_expr(rules: list, valid_rules: set) -> str:
     return max
 
 
-def dynamic_lpp_points_calc(rules: list, monthly: dict) -> None:
+def dynamic_lpp_points_calc(rules: list, monthly: dict):
     """Main algorithm implementation of Google's OR tools that solves and prints
     the number of times each rule is applied as well as the maximum points generated
     with that set of coefficients.
@@ -156,3 +156,5 @@ def dynamic_lpp_points_calc(rules: list, monthly: dict) -> None:
             print(f"Rule {i}: {int(x[i].solution_value())} times")
     else:
         print('The problem does not have an optimal solution.')
+    
+    return solver
