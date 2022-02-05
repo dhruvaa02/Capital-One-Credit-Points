@@ -1,0 +1,31 @@
+test_brute_force (__main__.TestBruteForce)
+Tests whether the brute force algorithm implemented returns correct maximum points. ... ok
+test_get_valid_rules (__main__.TestBruteForce)
+Tests whether the valid rules calcualted are actually applicable. ... ok
+test_dynamic_lpp_solver (__main__.TestDynamicLPP)
+Tests whether the dynamic LPP solver correctly identifies the maximum number of points ... ok
+test_find_defined_merchants (__main__.TestDynamicLPP)
+Tests whether the merchants specified in both the rules and monthly spendings ... ok
+test_generate_constraints (__main__.TestDynamicLPP)
+Tests whether the function correctly generates the correct mathematical constraints necessary ... ok
+test_generate_maximizer (__main__.TestDynamicLPP)
+Tests whether the function correctly generates the maximizer equation needed for the LPP ... ok
+test_rule_applicable (__main__.TestDynamicLPP)
+Tests whether the function correctly identifies if a rule is applicable for a given ... ok
+test_solver (__main__.TestLPPOptimizer)
+Tests whether the Google OR-tools library was implemented correctly for one specific ... ok
+test_file_reading (__main__.TestMonthly)
+Tests whether the file reading was implemented correctly for transactions reading ... ok
+test_monthly_summation (__main__.TestMonthly)
+Tests whether the monthly spending values being calculated is being summed correctly ... ok
+test_apply_rule (__main__.TestRules)
+Tests whether the a rule is being applied to spendings correctly for the brute force ... ok
+test_first_rule_remainder (__main__.TestRules)
+Tests whether the first rule in the rules list is for remainder values as specified ... ok
+test_rules_format (__main__.TestRules)
+Tests whether the rules have been given in the appropriate format for the program. ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.002s
+
+OK
