@@ -3,6 +3,7 @@ This file contains all the unit testing for the entire program, every part even 
 hard coded lpp optimizer). Should return 13 passed tests.
 """
 import unittest
+import sys
 import rules
 from brute_force import get_valid_rules, reduced_bf
 from data import get_monthly_spendings
@@ -19,15 +20,15 @@ class TestMonthly(unittest.TestCase):
         """
         Tests whether the file reading was implemented correctly for transactions reading
         """
-        self.assertEquals(self.file_to_read.keys(), {"sportcheck", "tim_hortons", "subway"})
+        self.assertEqual(self.file_to_read.keys(), {"sportcheck", "tim_hortons", "subway"})
     
     def test_monthly_summation(self) -> None:
         """
         Tests whether the monthly spending values being calculated is being summed correctly
         """
-        self.assertEquals(self.file_to_read["sportcheck"], 370)
-        self.assertEquals(self.file_to_read["tim_hortons"], 71)
-        self.assertEquals(self.file_to_read["subway"], 39)
+        self.assertEqual(self.file_to_read["sportcheck"], 370)
+        self.assertEqual(self.file_to_read["tim_hortons"], 71)
+        self.assertEqual(self.file_to_read["subway"], 39)
 
 
 class TestRules(unittest.TestCase):
@@ -41,7 +42,7 @@ class TestRules(unittest.TestCase):
         Tests whether the first rule in the rules list is for remainder values as specified 
         in documentation.
         """
-        self.assertEquals(self.rules_to_test.rules[0][1].keys(), {"remainder"})
+        self.assertEqual(self.rules_to_test.rules[0][1].keys(), {"remainder"})
     
     def test_rules_format(self) -> None:
         """
@@ -59,8 +60,8 @@ class TestRules(unittest.TestCase):
         """
         test_spendings = {"sportcheck": 1000, "subway": 500, "tim_hortons": 800, "the_bay": 200}
         rule_applied = self.rules_to_test.apply_rule(test_spendings, 1, 2)
-        self.assertEquals(rule_applied[0], 1000)
-        self.assertEquals(rule_applied[1], {'sportcheck': 850, 'subway': 450, 
+        self.assertEqual(rule_applied[0], 1000)
+        self.assertEqual(rule_applied[1], {'sportcheck': 850, 'subway': 450, 
         'tim_hortons': 750, 'the_bay': 200})
 
 
@@ -72,13 +73,13 @@ class TestBruteForce(unittest.TestCase):
         """
         Tests whether the valid rules calcualted are actually applicable.
         """
-        self.assertEquals(get_valid_rules({"sportcheck": 210}), [3, 6])
+        self.assertEqual(get_valid_rules({"sportcheck": 210}), [3, 6])
     
     def test_brute_force(self) -> None:
         """
         Tests whether the brute force algorithm implemented returns correct maximum points.
         """
-        self.assertEquals(reduced_bf({"sportcheck": 210}), (760, (6, 3), [10, 0]))
+        self.assertEqual(reduced_bf({"sportcheck": 210}), (760, (6, 3), [10, 0]))
 
 
 class TestLPPOptimizer(unittest.TestCase):
@@ -92,7 +93,7 @@ class TestLPPOptimizer(unittest.TestCase):
         Tests whether the Google OR-tools library was implemented correctly for one specific
         hard coded scenario.
         """ 
-        self.assertEquals(int(self.solver_to_test.Objective().Value()), 1675)
+        self.assertEqual(int(self.solver_to_test.Objective().Value()), 1675)
 
 
 class TestDynamicLPP(unittest.TestCase):
@@ -111,7 +112,7 @@ class TestDynamicLPP(unittest.TestCase):
         """ 
         relevant = {"tim_hortons": "", "sportcheck": ""}
 
-        self.assertEquals(find_defined_merchants([
+        self.assertEqual(find_defined_merchants([
         (1, {"remainder": 1}),
         (500, {"sportcheck": 75, "tim_hortons": 25, "subway": 25}),
         (300, {"sportcheck": 75, "tim_hortons": 25}),
@@ -138,8 +139,8 @@ class TestDynamicLPP(unittest.TestCase):
         (300, {"sportcheck": 75, "tim_hortons": 25}),
         (200, {"sportcheck": 75})], {"sportcheck": 500, "tim_hortons": 500})
 
-        self.assertEquals(constraints_to_test[0]["sportcheck"], "75*x[2] + 75*x[3] <= 500")
-        self.assertEquals(constraints_to_test[0]["remainder"], "x[4] <= (500 - (75*x[2] + 75*x[3])) + (500 - (25*x[2])) + 0")
+        self.assertEqual(constraints_to_test[0]["sportcheck"], "75*x[2] + 75*x[3] <= 500")
+        self.assertEqual(constraints_to_test[0]["remainder"], "x[4] <= (500 - (75*x[2] + 75*x[3])) + (500 - (25*x[2])) + 0")
 
     def test_generate_maximizer(self) -> None:
         """
@@ -156,7 +157,7 @@ class TestDynamicLPP(unittest.TestCase):
         (300, {"sportcheck": 75, "tim_hortons": 25}),
         (200, {"sportcheck": 75})], valid_rules)
 
-        self.assertEquals(maximizer_to_test, "x[2]*300 + x[3]*200 + x[4]*1")
+        self.assertEqual(maximizer_to_test, "x[2]*300 + x[3]*200 + x[4]*1")
 
     def test_dynamic_lpp_solver(self) -> None:
         """
@@ -169,8 +170,19 @@ class TestDynamicLPP(unittest.TestCase):
         (300, {"sportcheck": 75, "tim_hortons": 25}),
         (200, {"sportcheck": 75})], {"sportcheck": 1000, "the_bay": 5000})
 
-        self.assertEquals(int(maximizer_to_test.Objective().Value()), 7625)
+        self.assertEqual(int(maximizer_to_test.Objective().Value()), 7625)
+
+
+def main(out = sys.stderr, verbosity = 2) -> None:
+    """
+    Runs the testing and logs the results to testing.out
+    """
+    loader = unittest.TestLoader()
+  
+    suite = loader.loadTestsFromModule(sys.modules[__name__])
+    unittest.TextTestRunner(out, verbosity = verbosity).run(suite)
 
 
 if __name__ == '__main__':
-    unittest.main()
+    with open('testing.out', 'w') as f:
+        main(f)
