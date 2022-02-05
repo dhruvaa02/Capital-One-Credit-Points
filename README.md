@@ -1,6 +1,6 @@
 # Capital-One-Credit-Points
 
-Welcome to my Credit Card Reward Points System program for the Capital One take-home project. 
+Welcome to my Credit Card Reward Points System program for the Capital One take-home project!
 
 In this page I will explain what is needed to use my program, how to use it, any assumptions I have made during the creation of the program, how it could be improved, and how this code could be further integrated and scaled.
 
@@ -67,6 +67,20 @@ In this page I will explain what is needed to use my program, how to use it, any
 6. I was allowed to use external libraries, rather than implementing the LPP linear algorithm manually.
 7. I was allowed to interchange the per-transaction points for a list of rules and the number of times the rule was applied.
 
-### Improvements and extensions
+### Scalability, improvements & extensions
 
-- 
+- Scalability:
+  1. The program dynamically generates its rules. Thus, no matter how many rules you give the program, or how large the number of transactions given are, the program will maximise the rewards points.
+  2. The program doesn't just brute force the solution, therefore as it is mainly just linear algebra, this solution should be far quicker and more efficient for larger sized inputs.
+  3. The program prints to standard output, so outputs could be saved to files and saved in databases easily rather than returning and hence is overall more compatible.
+- Improvements that can be made:
+  1. The rules could be input through a file rather than having to edit the ```rules.py``` file directly.
+  2. There is a certain level of coupling. The project could be designed better to better conform to SOLID and clean architecture principles.
+- Extensions:
+  1. The choice of algorithm could be given to the user of the program, rather than being a hard coded choice.
+  2. The entire program could be run with command line arguments, and then perhaps with a frontend UI.
+  3. The program could be hosted on some platform to make it more accessible, without the need of installing Python and other dependencies locally.
+
+If you have any questions, please feel free to reach out to me at: dhruvaa.saravanan@gmail.com
+
+I look forward to meeting you!
