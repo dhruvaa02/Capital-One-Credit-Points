@@ -1,4 +1,4 @@
-# Capital- One Credit Card Rewards System Project
+# Capital One Credit Card Rewards System Project
 
 Welcome to my Credit Card Reward Points System program for the Capital One take-home project!
 
