@@ -17,6 +17,7 @@ In this page I will explain what is needed to use my program, how to use it, ass
 - ```brute_force.py```: file containing my first attempt, brute force implementation containing the 2 functions necessary to search through every permutation of rules applied.
 - ```lpp_optimizer.py```: this file contains a very hard coded implementation of Google's OR tools in order to solve the exact example provided in the handout. This file is not used in my program, but is incredibly beneficial to understanding how the dynamically generated version works.
 - ```dynamic_lpp.py```: my main method. This file generates the necessary equations to utilize the OR-tools library in order to maximize the number of reward points.
+- ```testing.py```: unit testing for all of the files in this project. The results are logged to ```testing.out```.
 - ```transactions.json```: the file containing the transactions for a customer in a given month.
 
 ### Prerequisites
@@ -34,6 +35,10 @@ In this page I will explain what is needed to use my program, how to use it, ass
 ### How to use the program
 
 - Simply run the ```main.py``` file and the program should print the results for the main example in the handout!
+
+  ```python
+  python3 main.py
+  ```
 
 - To run the program with other scenarios, there are 2 ways to edit the program: 
 
@@ -55,7 +60,11 @@ In this page I will explain what is needed to use my program, how to use it, ass
   Rule 7: 50 times
   ````
 
-  
+- To test the program, run the ```testing.py``` file and read the logs from ```testing.out```:
+
+  ```python
+  python3 testing.py
+  ```
 
 ### Assumptions
 
@@ -77,6 +86,7 @@ In this page I will explain what is needed to use my program, how to use it, ass
   1. The rules could be input through a file rather than having to edit the ```rules.py``` file directly.
   2. Much better error handling could be implemented.
   2. There is a certain level of coupling. The project could be designed better to better conform to SOLID and clean architecture principles.
+  2. More unit tests can be added, as well as the testing being run automatically when the program is called.
 - Extensions:
   1. The choice of algorithm could be given to the user of the program, rather than being a hard coded choice.
   2. The entire program could be run with command line arguments, and then perhaps with a frontend UI.
