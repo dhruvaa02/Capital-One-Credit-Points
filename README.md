@@ -75,7 +75,7 @@ In this page I will explain what is needed to use my program, how to use it, ass
   3. The program prints to standard output, so outputs could be saved to files and saved in databases easily rather than returning and hence is overall more compatible.
 - Improvements that can be made:
   1. The rules could be input through a file rather than having to edit the ```rules.py``` file directly.
-  2. Much better error handling could be implemented, rather than simple if checks followed by print statements.
+  2. Much better error handling could be implemented.
   2. There is a certain level of coupling. The project could be designed better to better conform to SOLID and clean architecture principles.
 - Extensions:
   1. The choice of algorithm could be given to the user of the program, rather than being a hard coded choice.
