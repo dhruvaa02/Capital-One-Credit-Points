@@ -41,10 +41,9 @@ class RuleSet:
             - mult: how many times to apply given rule to spendings
  
         Returns:
-            (points, remaining_spendings): tuple containg points earned and remaning money to
+            - (points, remaining_spendings): tuple containg points earned and remaning money to
                                            calculate
 
-        
         >>> monthly_spendings = {"sportcheck": 75, "tim_hortons": 25, "subway": 25}
         >>> print(RuleSet().apply_rule(monthly_spendings, 1, 1))
         (500, {'sportcheck': 0, 'tim_hortons': 0, 'subway': 0})
