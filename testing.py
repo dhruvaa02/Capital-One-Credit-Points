@@ -2,6 +2,7 @@ import unittest
 import rules
 from brute_force import get_valid_rules, reduced_bf
 from data import get_monthly_spendings
+from lpp_optimizer import lpp_solver
 
 
 class TestMonthly(unittest.TestCase):
@@ -45,6 +46,16 @@ class TestBruteForce(unittest.TestCase):
     
     def test_get_valid_rules(self):
         self.assertEquals(get_valid_rules({"sportcheck": 210}), [3, 6])
+
+
+class TestLPPOptimizer(unittest.TestCase):
+
+    solver_to_test = lpp_solver()
+
+    def test_solver(self):
+        
+        self.assertEquals(int(self.solver_to_test.Objective().Value()), 1675)
+
 
 
 if __name__ == '__main__':
