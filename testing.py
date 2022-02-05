@@ -1,6 +1,8 @@
 import unittest
 import rules
+from brute_force import get_valid_rules, reduced_bf
 from data import get_monthly_spendings
+
 
 class TestMonthly(unittest.TestCase):
 
@@ -34,6 +36,15 @@ class TestRules(unittest.TestCase):
         self.assertEquals(rule_applied[0], 1000)
         self.assertEquals(rule_applied[1], {'sportcheck': 850, 'subway': 450, 
         'tim_hortons': 750, 'the_bay': 200})
+
+
+class TestBruteForce(unittest.TestCase):
+
+    def test_brute_force(self):
+        self.assertEquals(reduced_bf({"sportcheck": 210}), (760, (6, 3), [10, 0]))
+    
+    def test_get_valid_rules(self):
+        self.assertEquals(get_valid_rules({"sportcheck": 210}), [3, 6])
 
 
 if __name__ == '__main__':

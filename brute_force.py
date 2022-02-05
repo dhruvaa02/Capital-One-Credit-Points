@@ -49,8 +49,8 @@ def get_valid_rules(spendings: dict) -> list:
     Returns:
         - valid_rules: list containing the tuples of all valid rules
 
-    >>> print(reduced_bf({"sportcheck": 210}))
-    (760, (6, 3), [10, 0])
+    >>> print(get_valid_rules({"sportcheck": 210}))
+    [3, 6]
     """
     total_rules = RuleSet().rules
     valid_rules = []
