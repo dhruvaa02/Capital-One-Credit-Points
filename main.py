@@ -1,3 +1,27 @@
+"""Main program for the Summer 2022 Capital One Credit Card Reward Points program 
+technical challenge
+
+This file runs the etire program. Here, you can specify the name of the
+file of a given user's transactions, as long as it is in JSON format.
+
+The program then calculates the total spendings of the user at each
+store during in the month and proceeds to calculate the maximum rewards
+points possible.
+
+The maximum points possible to be earned along with which rules were applied
+and how many times they were applied are printed in this format if
+successful:
+>>>
+Solution:
+Total points = 1675
+Rule 1: 1 times
+Rule 2: 0 times
+Rule 3: 0 times
+Rule 4: 1 times
+Rule 5: 0 times
+Rule 6: 13 times
+Rule 7: 50 times
+"""
 from monthly import get_monthly_spendings
 from dynamic_lpp import dynamic_lpp_points_calc
 from rules import RuleSet
